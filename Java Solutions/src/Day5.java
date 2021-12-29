@@ -1,128 +1,178 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Scanner;
 
 public class Day5 {
 
     public static void part1() {
         Scanner scan = new Scanner(System.in);
-        int x1 = 0;
-        int x2 = 0;
-        int y1 = 0;
-        int y2 = 0;
-        ArrayList<Integer []> points = new ArrayList<>();
+        int [] [] grid = new int [1000] [1000];
         int counter = 0;
+        int x1, y1, x2, y2;
 
+        //getting input and running calculations at the same time
         while (true) {
             String input1 = scan.next();
-            scan.next();
-            String input2 = scan.next();
             if (input1.equals("done")) {
                 break;
             }
+            scan.next();
+            String input2 = scan.next();
+
             String [] point1asStr = input1.split(",");
             String [] point2asStr = input2.split(",");
 
-            int [] point1 = new int [2];
-            int [] point2 = new int [2];
+            x1 = Integer.parseInt(point1asStr [0]);
+            y1 = Integer.parseInt(point1asStr [1]);
+            x2 = Integer.parseInt(point2asStr [0]);
+            y2 = Integer.parseInt(point2asStr [1]);
             
-            for (int i = 0; i < 2; i ++) {
-                point1 [i] = Integer.parseInt(point1asStr [i]);
-                point2 [i] = Integer.parseInt(point2asStr [i]);
-            }
-
-            x1 = point1 [0];
-            x2 = point2 [0];
-            y1 = point1 [1];
-            y2 = point2 [1];
-
+            //if the line is vertical, "draw" it on the grid and check for overlaps
             if (x1 == x2) {
                 if (y1 < y2) {
                     for (int i = y1; i <= y2; i ++) {
-                        points.add(new Integer [] {x1, i});
+                        if (grid [x1] [i] == 1) {
+                            counter ++;
+                        } 
+                        grid [x1] [i] ++;
                     }
                 }
                 else {
                     for (int i = y2; i <= y1; i ++) {
-                        points.add(new Integer [] {x1, i});
+                        if (grid [x1] [i] == 1) {
+                            counter ++;
+                        }
+                        grid [x1] [i] ++;
                     }
                 }
             }
+            //if the line is horizontal, "draw" it on the grid and check for overlaps
             else if (y1 == y2) {
                 if (x1 < x2) {
                     for (int i = x1; i <= x2; i ++) {
-                        points.add(new Integer [] {i, y1});
+                        if (grid [i] [y1] == 1) {
+                            counter ++;
+                        } 
+                        grid [i] [y1] ++;
                     }
                 }
                 else {
                     for (int i = x2; i <= x1; i ++) {
-                        points.add(new Integer [] {i, y1});
+                        if (grid [i] [y1] == 1) {
+                            counter ++;
+                        }
+                        grid [i] [y1] ++;
                     }
-                }
-            }
-        }
-
-        for (int i = 0; i < points.size(); i ++) {
-            for (int j = i + 1; j < points.size(); j ++) {
-                //System.out.println("First: " + Arrays.toString(points.get(i)) 
-                //+ ", Second: " + Arrays.toString(points.get(j)));
-                //System.out.println("Equal: " + (points.get(i) [0] == points.get(j) [0] && 
-                //points.get(i) [1] == points.get(j) [1]));
-                if (points.get(i) [0] == points.get(j) [0] && points.get(i) [1] == points.get(j) [1]) {
-                    counter ++;
-                    break;
                 }
             }
         }
 
         System.out.println(counter);
-
         scan.close();
     }
 
     public static void part2() {
         Scanner scan = new Scanner(System.in);
-        ArrayList<Integer [] []> lines = new ArrayList<>();
+        int [] [] grid = new int [1000] [1000];
         int counter = 0;
+        int x1, y1, x2, y2;
 
+        //getting input and running calculations at the same time
         while (true) {
             String input1 = scan.next();
-            scan.next();
-            String input2 = scan.next();
             if (input1.equals("done")) {
                 break;
             }
+            scan.next();
+            String input2 = scan.next();
 
             String [] point1asStr = input1.split(",");
             String [] point2asStr = input2.split(",");
 
-            Integer [] point1 = new Integer [2];
-            Integer [] point2 = new Integer [2];
+            x1 = Integer.parseInt(point1asStr [0]);
+            y1 = Integer.parseInt(point1asStr [1]);
+            x2 = Integer.parseInt(point2asStr [0]);
+            y2 = Integer.parseInt(point2asStr [1]);
             
-            for (int i = 0; i < 2; i ++) {
-                point1 [i] = Integer.parseInt(point1asStr [i]);
-                point2 [i] = Integer.parseInt(point2asStr [i]);
+            //if the line is vertical, "draw" it on the grid and check for overlaps
+            if (x1 == x2) {
+                if (y1 < y2) {
+                    for (int i = y1; i <= y2; i ++) {
+                        if (grid [x1] [i] == 1) {
+                            counter ++;
+                        } 
+                        grid [x1] [i] ++;
+                    }
+                }
+                else {
+                    for (int i = y2; i <= y1; i ++) {
+                        if (grid [x1] [i] == 1) {
+                            counter ++;
+                        }
+                        grid [x1] [i] ++;
+                    }
+                }
             }
-
-            lines.add(new Integer [] [] {point1, point2});
-
-        }
-
-        for (int i = 0; i < lines.size(); i ++) {
-            for (int j = i + 1; j < lines.size(); j ++) {
-                if (lines.get(i) [0] [0] <= lines.get(j) [0] [0] && lines.get(j) [0] [0] <= lines.get(i) [1] [0] &&
-                lines.get(i) [0] [1] <= lines.get(j) [0] [1] && lines.get(i) [0] [1] <= lines.get(j) [1] [1]);
+            //if the line is horizontal, "draw" it on the grid and check for overlaps
+            else if (y1 == y2) {
+                if (x1 < x2) {
+                    for (int i = x1; i <= x2; i ++) {
+                        if (grid [i] [y1] == 1) {
+                            counter ++;
+                        } 
+                        grid [i] [y1] ++;
+                    }
+                }
+                else {
+                    for (int i = x2; i <= x1; i ++) {
+                        if (grid [i] [y1] == 1) {
+                            counter ++;
+                        }
+                        grid [i] [y1] ++;
+                    }
+                }
+            }
+            //if the line is diagonal, "draw" it on the grid and check for overlaps
+            else {
+                if (x1 < x2 && y1 < y2) {
+                    for (int i = 0; i <= x2 - x1; i ++) {
+                        if (grid [x1 + i] [y1 + i] == 1) {
+                            counter ++;
+                        }
+                        grid [x1 + i] [y1 + i] ++;
+                    }
+                }
+                else if (x2 < x1 && y2 < y1) {
+                    for (int i = 0; i <= x1 - x2; i ++) {
+                        if (grid [x2 + i] [y2 + i] == 1) {
+                            counter ++;
+                        }
+                        grid [x2 + i] [y2 + i] ++;
+                    }
+                }
+                else if (x1 < x2 && y2 < y1) {
+                    for (int i = 0; i <= x2 - x1; i ++) {
+                        if (grid [x1 + i] [y1 - i] == 1) {
+                            counter ++;
+                        }
+                        grid [x1 + i] [y1 - i] ++;
+                    }
+                }
+                else if (x2 < x1 && y1 < y2){
+                    for (int i = 0; i <= x1 - x2; i ++) {
+                        if (grid [x2 + i] [y2 - i] == 1) {
+                            counter ++;
+                        }
+                        grid [x2 + i] [y2 - i] ++;
+                    }
+                }
             }
         }
 
         System.out.println(counter);
-
         scan.close();
     }
 
-    public static void main(String[] args) throws Exception { 
-       
+    public static void main(String[] args) throws Exception {
+        part1();
+        part2();
     }  
 }
