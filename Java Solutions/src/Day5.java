@@ -1,21 +1,22 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Day5 {
 
-    public static void part1() {
-        Scanner scan = new Scanner(System.in);
+    public static void part1() throws FileNotFoundException {
+        Scanner scan = new Scanner(new File("Day5Text.txt"));
         int [] [] grid = new int [1000] [1000];
         int counter = 0;
         int x1, y1, x2, y2;
 
         //getting input and running calculations at the same time
-        while (true) {
+        while (scan.hasNext()) {
             String input1 = scan.next();
-            if (input1.equals("done")) {
-                break;
-            }
             scan.next();
             String input2 = scan.next();
+
+            System.out.println(input1 + " " + input2);
 
             String [] point1asStr = input1.split(",");
             String [] point2asStr = input2.split(",");
@@ -64,23 +65,19 @@ public class Day5 {
                 }
             }
         }
-
         System.out.println(counter);
         scan.close();
     }
 
-    public static void part2() {
-        Scanner scan = new Scanner(System.in);
+    public static void part2() throws FileNotFoundException {
+        Scanner scan = new Scanner(new File("Day5Text.txt"));
         int [] [] grid = new int [1000] [1000];
         int counter = 0;
         int x1, y1, x2, y2;
 
         //getting input and running calculations at the same time
-        while (true) {
+        while (scan.hasNext()) {
             String input1 = scan.next();
-            if (input1.equals("done")) {
-                break;
-            }
             scan.next();
             String input2 = scan.next();
 
